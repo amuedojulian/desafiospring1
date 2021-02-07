@@ -12,15 +12,15 @@ import java.util.LinkedList;
 
 import static java.nio.file.StandardWatchEventKinds.*;
 
-public class dataInputWatcher {
+public class dataInputReader {
 
-    private static  final Logger log = LoggerFactory.getLogger(dataInputWatcher.class);
+    private static  final Logger log = LoggerFactory.getLogger(dataInputReader.class);
 
     public Path directoryToWatch;
 
     private LinkedList<String> listDataInput;
 
-    public void doWath(String directory) throws IOException {
+    public void listen(String directory) throws IOException {
 
         // Obtemos o diretório
         if (!new File(directory).exists()) {
