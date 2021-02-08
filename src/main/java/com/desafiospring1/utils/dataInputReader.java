@@ -1,5 +1,7 @@
 package com.desafiospring1.utils;
 
+import com.desafiospring1.model.Cliente;
+import com.desafiospring1.services.ClienteService;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -9,6 +11,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.*;
 import java.net.URI;
@@ -22,6 +25,9 @@ import java.util.LinkedList;
 import static java.nio.file.StandardWatchEventKinds.*;
 
 public class dataInputReader {
+
+    @Autowired
+    private ClienteService clienteService;
 
     private static  final Logger log = LoggerFactory.getLogger(dataInputReader.class);
 
@@ -106,9 +112,16 @@ public class dataInputReader {
             cadena = (String) iter.next();
             String id = cadena.substring(0, 3);
             switch (id) {
-                case "001":
-                    client.post("http://localhost:8080/api/clientes", cadena);
-                    if (client.status == "OK") {
+                case "002":
+                    Cliente cliente = new Cliente();
+                    cliente.setBusinessArea("Vagancia");
+                    cliente.setCnpj("5454545445");
+                    cliente.setName("Pedro Alonso");
+                    this.clienteService.persistir(cliente);
+
+                    //client.post("http://localhost:8080/api/clientes", cadena);
+
+                    if (client.status.equals("OK")) {
                         cadena+=" [UPLOADED]";
                     } else {
                         cadena+=" [FAILED]";

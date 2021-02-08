@@ -3,6 +3,7 @@ package com.desafiospring1.services.impl;
 import com.desafiospring1.model.Cliente;
 import com.desafiospring1.repository.ClienteRepository;
 import com.desafiospring1.services.ClienteService;
+import com.google.common.base.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

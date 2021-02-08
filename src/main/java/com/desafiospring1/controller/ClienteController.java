@@ -65,7 +65,7 @@ public class ClienteController {
             result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
             return ResponseEntity.badRequest().body(response);
         }
-        cliente = this.clienteService.persistir(cliente);
+        clienteService.persistir(cliente);
         response.setData(cliente);
         return ResponseEntity.ok(response);
     }
@@ -88,7 +88,7 @@ public class ClienteController {
             result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
             return ResponseEntity.badRequest().body(response);
         }
-        cliente = this.clienteService.persistir(cliente);
+        clienteService.persistir(cliente);
         response.setData(cliente);
         return ResponseEntity.ok(response);
     }

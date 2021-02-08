@@ -15,10 +15,10 @@ public interface ClienteService {
     Optional<Cliente> buscarPorCnpj(String cnpj);
 
     /**
-     * Cadastra uma nova empressa na base de dados
+     * Cadastra um novo Cliente na base de dados
      *
      * @param cliente
-     * @return Empressa
+     * @return Cliente
      */
     Cliente persistir(Cliente cliente);
 }
