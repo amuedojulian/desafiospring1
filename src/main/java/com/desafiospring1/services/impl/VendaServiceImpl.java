@@ -34,8 +34,8 @@ public class VendaServiceImpl implements VendaService {
     }
 
     @CachePut(value = "vendaPorId")
-    public Venda persistir(Venda lancamento) {
-        log.info("Persisitndo o venda {}", lancamento);
-        return this.vendaRepository.save(lancamento);
+    public Venda persistir(Venda venda) {
+        log.info("Persisitndo o venda {}", venda);
+        return this.vendaRepository.save(venda);
     }
 }

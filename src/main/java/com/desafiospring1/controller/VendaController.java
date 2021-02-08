@@ -17,6 +17,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.text.ParseException;
 import java.util.Optional;
 
 @RestController
@@ -54,9 +56,9 @@ public class VendaController {
         Response<Page<Venda>> response = new Response<Page<Venda>>();
 
         PageRequest pageRequest = PageRequest.of(pag, this.qtdPorPagina, Sort.Direction.valueOf(dir), ord);
-        Page<Venda> lancamentos = this.vendaService.buscarPorVendedorId(vendedorId, pageRequest);
+        Page<Venda> vendas = this.vendaService.buscarPorVendedorId(vendedorId, pageRequest);
 
-        response.setData(lancamentos);
+        response.setData(vendas);
         return ResponseEntity.ok(response);
     }
 
@@ -83,19 +85,93 @@ public class VendaController {
     }
 
     /**
+     * Adiciona uma nova venda
+     *
+     * @param venda
+     //* @param result
+     * @return ResponseEntity<Response<Venda>>
+     * @throws ParseException
+     */
+    public ResponseEntity<Response<Venda>> adicionar(@Valid @RequestBody Venda venda, BindingResult result) throws ParseException {
+        log.info("Adicionando venda: {}", venda.toString());
+        Response<Venda> response = new Response<Venda>();
+        validarVendedor(venda, result);
+
+        if (result.hasErrors()) {
+            log.error("Erro validando venda: {}", result.getAllErrors());
+            result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
+            return ResponseEntity.badRequest().body(response);
+        }
+
+        venda = this.vendaService.persistir(venda);
+        response.setData(venda);
+        return ResponseEntity.ok(response);
+    }
+
+    /**
+     * Atualiza os dados de um lancamento
+     *
+     * @param id
+     * @param lancamentoDto
+     * @return ResponseEntity<Response<LancamentoDto>>
+     * @throws ParseException
+     */
+    /*@PutMapping(value = "/{id}")
+    public ResponseEntity<Response<LancamentoDto>> atualizar(@PathVariable("id") Long id, @Valid @RequestBody LancamentoDto lancamentoDto, BindingResult result) throws ParseException {
+        log.info("Atualizando lancamento: {}", lancamentoDto.toString());
+        Response<LancamentoDto> response = new Response<LancamentoDto>();
+        validarFuncionario(lancamentoDto, result);
+        lancamentoDto.setId(Optional.of(id));
+        Lancamento lancamento = this.converterDtoParaLancamento(lancamentoDto, result);
+
+        if (result.hasErrors()) {
+            log.error("Erro validando lancamento: {}", result.getAllErrors());
+            result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
+            return ResponseEntity.badRequest().body(response);
+        }
+
+        lancamento = this.lancamentoService.persistir(lancamento);
+        response.setData(this.converterLancamentoDto(lancamento));
+        return ResponseEntity.ok(response);
+    }*/
+
+    /**
+     * Remove um lancamento por Id
+     *
+     * @param id
+     * @return ResponseEntity<Response<Lancamento>>
+     */
+    /*@DeleteMapping(value = "/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public ResponseEntity<Response<String>> remover(@PathVariable("id") Long id) {
+        log.info("Removendo lancamento: {}", id);
+        Response<String> response = new Response<String>();
+        Optional<Lancamento> lancamento = this.lancamentoService.buscarPorId(id);
+
+        if (!lancamento.isPresent()) {
+            log.error("Erro ao remover devido ao lancamento Id: {} ser inválido", id);
+            response.getErrors().add("Erro ao remover lancamento. Registro nao encontrado para o id" +  id);
+            return ResponseEntity.badRequest().body(response);
+        }
+
+        this.lancamentoService.remover(id);
+        return ResponseEntity.ok(new Response<String>());
+    }*/
+
+    /**
      * Valida um vendedor. Verificando se ele é exitente e válido no sistema
      *
      * @param venda
      * @return result
      */
     private void validarVendedor(Venda venda, BindingResult result) {
-        if (venda.getSalesMan().getId() == null) {
+        if (venda.getVendedorId().getId() == null) {
             result.addError(new ObjectError("vendedor", "Vendedor nao informado"));
             return;
         }
 
-        log.info("Validando vendedor id {}:", venda.getSalesMan().getId());
-        Optional<Vendedor> vendedor = this.vendedorService.buscarPorId(venda.getSalesMan().getId());
+        log.info("Validando vendedor id {}:", venda.getVendedorId().getId());
+        Optional<Vendedor> vendedor = this.vendedorService.buscarPorId(venda.getVendedorId().getId());
         if (!vendedor.isPresent()) {
             result.addError(new ObjectError("vendedor", "Vendedor nao encontrado. ID inexistente"));
         }

@@ -1,9 +1,18 @@
 package com.desafiospring1.utils;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.net.URI;
+import java.net.URL;
 import java.nio.file.*;
 import java.util.Collections;
 import java.util.Iterator;
@@ -60,7 +69,6 @@ public class dataInputReader {
 
                         case "ENTRY_MODIFY":
                             sort(directory+"\\"+file);
-                        break;
                     }
                 }
 
@@ -89,12 +97,26 @@ public class dataInputReader {
         b.close();
         f.close();
 
+        httpClient client = new httpClient();
+
         Iterator iter = listDataInput.iterator();
         String cadena;
         while (iter.hasNext())
         {
             cadena = (String) iter.next();
+            String id = cadena.substring(0, 3);
+            switch (id) {
+                case "001":
+                    client.post("http://localhost:8080/api/clientes", cadena);
+                    if (client.status == "OK") {
+                        cadena+=" [UPLOADED]";
+                    } else {
+                        cadena+=" [FAILED]";
+                    }
+                break;
+            }
             System.out.println(cadena);
+
         }
     }
 }

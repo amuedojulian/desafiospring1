@@ -7,13 +7,20 @@ import java.util.List;
 public class Venda {
 
     @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "venda")
     private List<Item> item;
     @ManyToOne
-    private Vendedor salesMan;
+    private Vendedor vendedorId;
 
-    public Venda() {
+    public Venda(){
+
+    }
+
+    public Venda(List<Item> item, Vendedor vendedorId) {
+        this.item = item;
+        this.vendedorId = vendedorId;
     }
 
     public Long getId() {
@@ -32,12 +39,12 @@ public class Venda {
         this.item = item;
     }
 
-    public Vendedor getSalesMan() {
-        return salesMan;
+    public Vendedor getVendedorId() {
+        return vendedorId;
     }
 
-    public void setSalesMan(Vendedor salesMan) {
-        this.salesMan = salesMan;
+    public void setVendedorId(Vendedor salesMan) {
+        this.vendedorId = salesMan;
     }
 
     @Override
@@ -45,7 +52,7 @@ public class Venda {
         return "Venda{" +
                 "saleID=" + id +
                 ", item=" + item +
-                ", salesMan=" + salesMan +
+                ", salesMan=" + vendedorId +
                 '}';
     }
 }

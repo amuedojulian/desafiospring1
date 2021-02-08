@@ -25,6 +25,12 @@ public class VendedorServiceImpl implements VendedorService {
     }
 
     @Override
+    public Optional<Vendedor> buscarPorId(Long id) {
+        log.info("Buscando um vendedor para o ID {}", id);
+        return vendedorRepository.findById(id);
+    }
+
+    @Override
     public Vendedor persistir(Vendedor vendedor) {
         log.info("Persistiendo vendedor: {}", vendedor);
         return this.vendedorRepository.save(vendedor);

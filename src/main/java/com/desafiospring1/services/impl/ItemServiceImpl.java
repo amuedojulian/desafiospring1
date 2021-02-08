@@ -21,7 +21,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public Optional<Item> findById(Long id) {
         log.info("Buscando um item para o ID {}", id);
-        return Optional.ofNullable(itemRepository.findById(id));
+        return itemRepository.findById(id);
     }
 
     @Override

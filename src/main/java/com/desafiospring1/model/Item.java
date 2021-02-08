@@ -2,14 +2,13 @@ package com.desafiospring1.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
 public class Item {
 
     @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
     private Long itemCode;
     private float price;
@@ -19,6 +18,12 @@ public class Item {
     private Venda venda;
 
     public Item() {
+    }
+
+    public Item(Long itemCode, float price, int qtd) {
+        this.itemCode = itemCode;
+        this.price = price;
+        this.qtd = qtd;
     }
 
     public Long getId() {
