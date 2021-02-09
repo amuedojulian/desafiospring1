@@ -56,7 +56,7 @@ public class ClienteController {
      * @return ResponseEntity<Response<Cliente>>
      * @throws ParseException
      */
-    @PostMapping()
+    @PostMapping("/add")
     public ResponseEntity<Response<Cliente>> adicionar(@Valid @RequestBody Cliente cliente, BindingResult result) throws ParseException {
         log.info("Adicionando cliente: {}", cliente.toString());
         Response<Cliente> response = new Response<Cliente>();
@@ -78,7 +78,7 @@ public class ClienteController {
      * @return ResponseEntity<Response<Cliente>>
      * @throws ParseException
      */
-    @PutMapping(value = "/{id}")
+    @PutMapping(value = "/update/{id}")
     public ResponseEntity<Response<Cliente>> atualizar(@PathVariable("id") Long id, @Valid @RequestBody Cliente cliente, BindingResult result) throws ParseException {
         log.info("Atualizando cliente: {}", cliente.toString());
         Response<Cliente> response = new Response<Cliente>();

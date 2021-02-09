@@ -7,6 +7,8 @@ import com.google.common.base.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -20,12 +22,14 @@ public class ClienteServiceImpl implements ClienteService {
     private ClienteRepository clienteRepository;
 
     @Override
+    @Cacheable(value = "clientePorCnpj", key = "#cnpj")
     public Optional<Cliente> buscarPorCnpj(String cnpj) {
         log.info("Buscando um cliente para o CNPJ {}", cnpj);
         return Optional.ofNullable(clienteRepository.findByCnpj(cnpj));
     }
 
     @Override
+    @CachePut(value = "clientePorCnpj")
     public Cliente persistir(Cliente cliente) {
         log.info("Persistiendo cliente: {}", cliente);
         return this.clienteRepository.save(cliente);
