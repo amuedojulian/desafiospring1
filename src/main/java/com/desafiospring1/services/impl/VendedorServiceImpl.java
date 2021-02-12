@@ -31,6 +31,12 @@ public class VendedorServiceImpl implements VendedorService {
     }
 
     @Override
+    public Optional<Vendedor> buscarPorName(String name, String file) {
+        log.info("Buscando um vendedor para o Nome {}", name);
+        return Optional.ofNullable(vendedorRepository.findByNameAndFile(name, file));
+    }
+
+    @Override
     public Vendedor persistir(Vendedor vendedor) {
         log.info("Persistiendo vendedor: {}", vendedor);
         return this.vendedorRepository.save(vendedor);

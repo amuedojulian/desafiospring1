@@ -14,16 +14,10 @@ public class Item {
     private float price;
     private int qtd;
     @ManyToOne
-    @JsonBackReference
+    //@JsonBackReference
     private Venda venda;
 
     public Item() {
-    }
-
-    public Item(Long itemCode, float price, int qtd) {
-        this.itemCode = itemCode;
-        this.price = price;
-        this.qtd = qtd;
     }
 
     public Long getId() {
@@ -58,11 +52,21 @@ public class Item {
         this.qtd = qtd;
     }
 
+    public Venda getVenda() {
+        return venda;
+    }
+
+    public void setVenda(Venda venda) {
+        this.venda = venda;
+    }
+
     @Override
     public String toString() {
         return "Item{" +
-                "id=" + id +
+                "itemCode=" + itemCode +
                 ", price=" + price +
+                ", qtd=" + qtd +
+                ", venda=" + venda +
                 '}';
     }
 }

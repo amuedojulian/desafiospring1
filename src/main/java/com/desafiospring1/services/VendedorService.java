@@ -23,6 +23,15 @@ public interface VendedorService {
     Optional<Vendedor> buscarPorId(Long id);
 
     /**
+     * Busca e retorna um vendedor por seu Nome
+     *
+     * @param name
+     * @param file
+     * @return Optional<Vendedor>
+     */
+    Optional<Vendedor> buscarPorName(String name, String file);
+
+    /**
      * Cadastra um novo vendedor na base de dados
      *
      * @param vendedor

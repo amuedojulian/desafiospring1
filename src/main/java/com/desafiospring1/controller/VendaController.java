@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.Param;
+import org.springframework.data.web.JsonPath;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -92,18 +94,21 @@ public class VendaController {
      * @return ResponseEntity<Response<Venda>>
      * @throws ParseException
      */
-    public ResponseEntity<Response<Venda>> adicionar(@Valid @RequestBody Venda venda, BindingResult result) throws ParseException {
+    @PostMapping("/add/{vendaId}/{vendedorName}/{file}")
+    public ResponseEntity<Response<Venda>> adicionar(@PathVariable Long vendaId, @PathVariable String vendedorName, @PathVariable String file, @Valid @RequestBody Venda venda, BindingResult result) throws ParseException {
+        venda.setId(vendaId);
+        venda.setFile(file);
+        venda.setVendedor(vendedorService.buscarPorName(vendedorName, file).get());
+        validarVendedor(venda, result);
         log.info("Adicionando venda: {}", venda.toString());
         Response<Venda> response = new Response<Venda>();
-        validarVendedor(venda, result);
 
         if (result.hasErrors()) {
             log.error("Erro validando venda: {}", result.getAllErrors());
             result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
             return ResponseEntity.badRequest().body(response);
         }
-
-        venda = this.vendaService.persistir(venda);
+        vendaService.persistir(venda);
         response.setData(venda);
         return ResponseEntity.ok(response);
     }
@@ -165,13 +170,13 @@ public class VendaController {
      * @return result
      */
     private void validarVendedor(Venda venda, BindingResult result) {
-        if (venda.getVendedorId().getId() == null) {
+        if (venda.getVendedor() == null) {
             result.addError(new ObjectError("vendedor", "Vendedor nao informado"));
             return;
         }
 
-        log.info("Validando vendedor id {}:", venda.getVendedorId().getId());
-        Optional<Vendedor> vendedor = this.vendedorService.buscarPorId(venda.getVendedorId().getId());
+        log.info("Validando vendedor id {}:", venda.getVendedor().getId());
+        Optional<Vendedor> vendedor = this.vendedorService.buscarPorId(venda.getVendedor().getId());
         if (!vendedor.isPresent()) {
             result.addError(new ObjectError("vendedor", "Vendedor nao encontrado. ID inexistente"));
         }

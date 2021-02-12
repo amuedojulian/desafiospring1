@@ -1,9 +1,6 @@
 package com.desafiospring1.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Cliente {
@@ -14,6 +11,7 @@ public class Cliente {
     private String cnpj;
     private String name;
     private String businessArea;
+    private String file;
 
     public Cliente() {
     }
@@ -48,5 +46,22 @@ public class Cliente {
 
     public void setBusinessArea(String businessArea) {
         this.businessArea = businessArea;
+    }
+
+    public String getFile() {
+        return file;
+    }
+
+    public void setFile(String file) {
+        this.file = file;
+    }
+
+    @Override
+    public String toString() {
+        return "Cliente{" +
+                "cnpj='" + cnpj + '\'' +
+                ", name='" + name + '\'' +
+                ", businessArea='" + businessArea + '\'' +
+                '}';
     }
 }

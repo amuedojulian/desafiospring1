@@ -17,7 +17,7 @@ import java.util.List;
 @Transactional(readOnly = true)
 @NamedQueries({
         @NamedQuery(name = "VendaRepository.findByVendedorId",
-                query = "SELECT * FROM Venda venda WHERE venda.vendedor_id_id = :vendedorId") })
+                query = "SELECT vendedor FROM Venda venda WHERE venda.vendedor_id = :vendedorId") })
 public interface VendaRepository extends JpaRepository<Venda, Long> {
 
     List<Venda> findByVendedorId(@Param("vendedorId") Long vendedorId);

@@ -1,9 +1,9 @@
 package com.desafiospring1.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Vendedor {
@@ -14,6 +14,10 @@ public class Vendedor {
     private String cpf;
     private String name;
     private float salary;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "vendedor")
+    @JsonBackReference
+    private List<Venda> vendas;
+    private String file;
 
     public Vendedor() {
     }
@@ -48,6 +52,22 @@ public class Vendedor {
 
     public void setSalary(float salary) {
         this.salary = salary;
+    }
+
+    public List<Venda> getVendas() {
+        return vendas;
+    }
+
+    public void setVendas(List<Venda> vendas) {
+        this.vendas = vendas;
+    }
+
+    public String getFile() {
+        return file;
+    }
+
+    public void setFile(String file) {
+        this.file = file;
     }
 
     @Override
