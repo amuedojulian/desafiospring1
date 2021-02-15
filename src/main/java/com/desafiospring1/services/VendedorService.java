@@ -38,4 +38,13 @@ public interface VendedorService {
      * @return Vendedor
      */
     Vendedor persistir(Vendedor vendedor);
+
+    /**
+     * Cadastra um novo vendedor na base de dados
+     *
+     * @param file
+     * @return Long
+     */
+    Long count(String file);
+
 }

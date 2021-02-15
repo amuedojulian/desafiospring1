@@ -12,8 +12,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.query.Param;
-import org.springframework.data.web.JsonPath;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -112,56 +110,6 @@ public class VendaController {
         response.setData(venda);
         return ResponseEntity.ok(response);
     }
-
-    /**
-     * Atualiza os dados de um lancamento
-     *
-     * @param id
-     * @param lancamentoDto
-     * @return ResponseEntity<Response<LancamentoDto>>
-     * @throws ParseException
-     */
-    /*@PutMapping(value = "/{id}")
-    public ResponseEntity<Response<LancamentoDto>> atualizar(@PathVariable("id") Long id, @Valid @RequestBody LancamentoDto lancamentoDto, BindingResult result) throws ParseException {
-        log.info("Atualizando lancamento: {}", lancamentoDto.toString());
-        Response<LancamentoDto> response = new Response<LancamentoDto>();
-        validarFuncionario(lancamentoDto, result);
-        lancamentoDto.setId(Optional.of(id));
-        Lancamento lancamento = this.converterDtoParaLancamento(lancamentoDto, result);
-
-        if (result.hasErrors()) {
-            log.error("Erro validando lancamento: {}", result.getAllErrors());
-            result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
-            return ResponseEntity.badRequest().body(response);
-        }
-
-        lancamento = this.lancamentoService.persistir(lancamento);
-        response.setData(this.converterLancamentoDto(lancamento));
-        return ResponseEntity.ok(response);
-    }*/
-
-    /**
-     * Remove um lancamento por Id
-     *
-     * @param id
-     * @return ResponseEntity<Response<Lancamento>>
-     */
-    /*@DeleteMapping(value = "/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN')")
-    public ResponseEntity<Response<String>> remover(@PathVariable("id") Long id) {
-        log.info("Removendo lancamento: {}", id);
-        Response<String> response = new Response<String>();
-        Optional<Lancamento> lancamento = this.lancamentoService.buscarPorId(id);
-
-        if (!lancamento.isPresent()) {
-            log.error("Erro ao remover devido ao lancamento Id: {} ser inválido", id);
-            response.getErrors().add("Erro ao remover lancamento. Registro nao encontrado para o id" +  id);
-            return ResponseEntity.badRequest().body(response);
-        }
-
-        this.lancamentoService.remover(id);
-        return ResponseEntity.ok(new Response<String>());
-    }*/
 
     /**
      * Valida um vendedor. Verificando se ele é exitente e válido no sistema

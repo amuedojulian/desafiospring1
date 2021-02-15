@@ -4,13 +4,12 @@ import com.desafiospring1.model.Vendedor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-
+@Repository("vendedorRepository")
 public interface VendedorRepository extends JpaRepository<Vendedor, Long> {
     Vendedor findByCpf(String cpf);
     Vendedor findByNameAndFile(String name, String file);
-    @Query("SELECT count(*) FROM Vendedor")
-    long countVendedors();
+    @Query(value = "select count(*) from Vendedor v where v.file like :file;", nativeQuery=true)
+    public Long count(@Param("file") String file);
 }

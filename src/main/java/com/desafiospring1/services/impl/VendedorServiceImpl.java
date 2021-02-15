@@ -6,15 +6,19 @@ import com.desafiospring1.services.VendedorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-@Service
+@Transactional
+@Service("vendedorService")
 public class VendedorServiceImpl implements VendedorService {
 
     private static final Logger log = LoggerFactory.getLogger(ClienteServiceImpl.class);
 
+    @Qualifier("vendedorRepository")
     @Autowired
     private VendedorRepository vendedorRepository;
 
@@ -40,5 +44,10 @@ public class VendedorServiceImpl implements VendedorService {
     public Vendedor persistir(Vendedor vendedor) {
         log.info("Persistiendo vendedor: {}", vendedor);
         return this.vendedorRepository.save(vendedor);
+    }
+
+    @Override
+    public Long count(String file) {
+        return vendedorRepository.count(file);
     }
 }

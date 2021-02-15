@@ -7,7 +7,6 @@ import java.nio.file.*;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Optional;
 
 
 import static java.nio.file.StandardWatchEventKinds.*;
@@ -51,7 +50,7 @@ public class dataInputReader {
                     System.out.println("Event : " + eventKind + " in File " +  file);
 
                     sortPost(directory, file);
-                    dataWriter.createReport("data\\out\\"+file);
+                    dataWriter.createReport("data\\out\\"+file, file);
                 }
                 // Ouvimos novamente. Mantemos em loop para ouvir indefinidamente.
                 key.reset();

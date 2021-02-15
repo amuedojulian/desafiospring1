@@ -1,7 +1,5 @@
 package com.desafiospring1.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import javax.persistence.*;
 
 @Entity
@@ -14,7 +12,6 @@ public class Item {
     private float price;
     private int qtd;
     @ManyToOne
-    //@JsonBackReference
     private Venda venda;
 
     public Item() {

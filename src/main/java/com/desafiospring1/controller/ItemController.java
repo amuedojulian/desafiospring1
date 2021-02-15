@@ -1,6 +1,5 @@
 package com.desafiospring1.controller;
 
-import com.desafiospring1.model.Cliente;
 import com.desafiospring1.model.Item;
 import com.desafiospring1.response.Response;
 import com.desafiospring1.services.ItemService;
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.text.ParseException;
 import java.util.Optional;

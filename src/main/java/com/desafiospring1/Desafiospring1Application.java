@@ -5,7 +5,6 @@ import com.desafiospring1.utils.dataOutputWrite;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -28,7 +27,7 @@ public class Desafiospring1Application {
                     if (!new File("data\\out").exists()) {
                         new File("data\\out").mkdirs();
                     }
-                    dataWrite.createReport("data\\out"+ruta.toString().substring(7));
+                    dataWrite.createReport("data\\out"+ruta.toString().substring(7), file);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
