@@ -2,6 +2,9 @@ package com.desafiospring1.utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.io.*;
 import java.nio.file.*;
 import java.util.Collections;
@@ -11,13 +14,16 @@ import java.util.LinkedList;
 
 import static java.nio.file.StandardWatchEventKinds.*;
 
+@Service
 public class DataInputReader {
 
     private static  final Logger log = LoggerFactory.getLogger(DataInputReader.class);
     public Path directoryToWatch;
     HttpClient client = new HttpClient();
     String file;
-    DataOutputWrite dataWriter =  new DataOutputWrite();
+
+    @Autowired
+    DataOutputWrite dataWriter;
 
     public void listen(String directory) throws IOException {
 

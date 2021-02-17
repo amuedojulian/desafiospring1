@@ -1,10 +1,13 @@
 package com.desafiospring1.utils;
 
 import com.desafiospring1.services.VendedorService;
+import com.desafiospring1.services.impl.VendedorServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -15,13 +18,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+@Service
 public class DataOutputWrite {
 
     private static final Logger log = LoggerFactory.getLogger(DataOutputWrite.class);
 
-    @Qualifier("vendedorServiceImpl")
     @Autowired
-    VendedorService vendedorService;
+    private VendedorService vendedorService;
 
     public void createReport(String ruta, String f) {
         try {

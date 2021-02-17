@@ -13,11 +13,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Transactional
-@Service
+@Service("vendedorService")
 public class VendedorServiceImpl implements VendedorService {
 
     private static final Logger log = LoggerFactory.getLogger(ClienteServiceImpl.class);
 
+    @Qualifier("vendedorRepository")
     @Autowired
     private VendedorRepository vendedorRepository;
 
