@@ -11,13 +11,13 @@ import java.util.LinkedList;
 
 import static java.nio.file.StandardWatchEventKinds.*;
 
-public class dataInputReader {
+public class DataInputReader {
 
-    private static  final Logger log = LoggerFactory.getLogger(dataInputReader.class);
+    private static  final Logger log = LoggerFactory.getLogger(DataInputReader.class);
     public Path directoryToWatch;
-    httpClient client = new httpClient();
+    HttpClient client = new HttpClient();
     String file;
-    dataOutputWrite dataWriter =  new dataOutputWrite();
+    DataOutputWrite dataWriter =  new DataOutputWrite();
 
     public void listen(String directory) throws IOException {
 

@@ -1,16 +1,15 @@
 package com.desafiospring1.utils;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
 import java.io.IOException;
 
-public class httpClient {
+public class HttpClient {
 
     String status = "";
-    HttpClient client = HttpClients.createDefault();
+    org.apache.http.client.HttpClient client = HttpClients.createDefault();
     HttpPost httpPost;
     String json = null;
     HttpResponse response;

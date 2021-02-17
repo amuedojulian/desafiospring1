@@ -13,12 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Transactional
-@Service("vendedorService")
+@Service
 public class VendedorServiceImpl implements VendedorService {
 
     private static final Logger log = LoggerFactory.getLogger(ClienteServiceImpl.class);
 
-    @Qualifier("vendedorRepository")
     @Autowired
     private VendedorRepository vendedorRepository;
 
@@ -47,7 +46,7 @@ public class VendedorServiceImpl implements VendedorService {
     }
 
     @Override
-    public Long count(String file) {
-        return vendedorRepository.count(file);
+    public Long countByFile(String file) {
+        return vendedorRepository.countByFile(file);
     }
 }

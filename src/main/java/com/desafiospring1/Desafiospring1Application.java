@@ -1,7 +1,7 @@
 package com.desafiospring1;
 
-import com.desafiospring1.utils.dataInputReader;
-import com.desafiospring1.utils.dataOutputWrite;
+import com.desafiospring1.utils.DataInputReader;
+import com.desafiospring1.utils.DataOutputWrite;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
@@ -17,8 +17,8 @@ public class Desafiospring1Application {
 
     public static void main(String[] args) throws IOException, ParseException {
         SpringApplication.run(Desafiospring1Application.class, args);
-        dataInputReader dataInputReader = new dataInputReader();
-        dataOutputWrite dataWrite =  new dataOutputWrite();
+        DataInputReader dataInputReader = new DataInputReader();
+        DataOutputWrite dataWrite =  new DataOutputWrite();
         Files.walk(Paths.get("data\\in")).forEach(ruta-> {
             if (Files.isRegularFile(ruta)) {
                 try {

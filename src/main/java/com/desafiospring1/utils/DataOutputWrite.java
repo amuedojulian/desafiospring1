@@ -1,9 +1,10 @@
 package com.desafiospring1.utils;
 
 import com.desafiospring1.services.VendedorService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -13,15 +14,12 @@ import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
 
-public class dataOutputWrite {
+public class DataOutputWrite {
 
-    @Qualifier("vendedorService")
+    private static final Logger log = LoggerFactory.getLogger(DataOutputWrite.class);
+
+    @Qualifier("vendedorServiceImpl")
     @Autowired
     VendedorService vendedorService;
 
@@ -42,24 +40,8 @@ public class dataOutputWrite {
             FileWriter fw = new FileWriter(file);
             BufferedWriter bw = new BufferedWriter(fw);
 
-            EntityManagerFactory emf= Persistence.
-                    createEntityManagerFactory("jpa");
-            EntityManager em=emf.createEntityManager();
-            try{
-                EntityTransaction entr=em.getTransaction();
-                entr.begin();
-                Query query=em.createQuery("SELECT COUNT (v.id) FROM Vendedor v");
-                Number cResults=(Number) query.getSingleResult();
-                System.out.println("Total Count result = "
-                        +cResults);
-                entr.commit();
-            }
-            finally{
-                em.close();
-            }
-
-            String clientes = " » O número de clientes inserido no arquivo de entrada é: " + vendedorService.count(f.substring(1)) + " «";
-            String vendedores = " » O número de vendedores inserido no arquivo de entrada é: " + "" + " «";
+            String clientes = " » O número de clientes inserido no arquivo de entrada é: " + " «";
+            String vendedores = " » O número de vendedores inserido no arquivo de entrada é: " + vendedorService.countByFile("0001.txt") + " «";
             String venda = " » A venda mais cara foi a venda de ID: " + " «";
             String vendedor = " » O vendedor com menos vendas foi: " + " «";
 

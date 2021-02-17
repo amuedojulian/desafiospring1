@@ -45,6 +45,6 @@ public interface VendedorService {
      * @param file
      * @return Long
      */
-    Long count(String file);
+    Long countByFile(String file);
 
 }
