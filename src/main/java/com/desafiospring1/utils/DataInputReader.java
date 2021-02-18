@@ -53,7 +53,7 @@ public class DataInputReader {
         // Registramos os eventos que queremos monitorar
         directoryToWatch.register(watchService, new WatchEvent.Kind[] {ENTRY_CREATE, ENTRY_DELETE});
 
-        log.info("Observando mudanças no diretório: " + directoryToWatch.toString());
+        log.info("Observando novas entradas de arquivo no diretório: " + directoryToWatch.toString());
 
         try {
 
@@ -91,6 +91,7 @@ public class DataInputReader {
 
     public void sortPost(String directory, String file) throws IOException{
         LinkedList<String> listDataInput = new LinkedList<String>();
+
         f = new FileReader(directory+"\\"+file);
         BufferedReader b = new BufferedReader(f);
         String linea = null;
