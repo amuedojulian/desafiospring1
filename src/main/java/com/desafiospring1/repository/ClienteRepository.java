@@ -8,4 +8,6 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
     Cliente findByCnpj(String cnpj);
     Long countByFile(String file);
 
+    void deleteAllByFile(String file);
+
 }

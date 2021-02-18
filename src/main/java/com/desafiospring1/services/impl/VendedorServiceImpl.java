@@ -55,4 +55,9 @@ public class VendedorServiceImpl implements VendedorService {
     public String findVendedorNameById(Long id) {
         return vendedorRepository.findVendedorNameById(id);
     }
+
+    @Override
+    public void delete(String file) {
+        this.vendedorRepository.deleteAllByFile(file);
+    }
 }

@@ -1,5 +1,9 @@
 package com.desafiospring1.utils;
 
+import com.desafiospring1.services.ClienteService;
+import com.desafiospring1.services.ItemService;
+import com.desafiospring1.services.VendaService;
+import com.desafiospring1.services.VendedorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +24,19 @@ public class DataInputReader {
     public Path directoryToWatch;
     HttpClient client = new HttpClient();
     String file;
+    FileReader f;
 
     @Autowired
     DataOutputWrite dataWriter;
+
+    @Autowired
+    ClienteService clienteService;
+
+    @Autowired
+    VendaService vendaService;
+
+    @Autowired
+    VendedorService vendedorService;
 
     public void listen(String directory) throws IOException {
 
@@ -37,7 +51,7 @@ public class DataInputReader {
         WatchService watchService = directoryToWatch.getFileSystem().newWatchService();
 
         // Registramos os eventos que queremos monitorar
-        directoryToWatch.register(watchService, new WatchEvent.Kind[] {ENTRY_CREATE});
+        directoryToWatch.register(watchService, new WatchEvent.Kind[] {ENTRY_CREATE, ENTRY_DELETE});
 
         log.info("Observando mudanças no diretório: " + directoryToWatch.toString());
 
@@ -52,11 +66,19 @@ public class DataInputReader {
                     String eventKind = event.kind().toString();
                     file = event.context().toString();
 
-                    System.out.println("Event : " + eventKind + " in File " +  file);
-
-                    sortPost(directory, file);
-                    System.out.println(file);
-                    dataWriter.createReport("data\\out\\"+file, file);
+                    switch (eventKind) {
+                        case "ENTRY_CREATE":
+                            System.out.println("Event : " + eventKind + " in File " +  file);
+                            sortPost(directory, file);
+                            dataWriter.createReport("data\\out\\"+file, file);
+                        break;
+                        case "ENTRY_DELETE":
+                            System.out.println("Event : " + eventKind + " in File " +  file);
+                            clienteService.delete(file);
+                            vendaService.delete(file);
+                            vendedorService.delete(file);
+                        break;
+                    }
                 }
                 // Ouvimos novamente. Mantemos em loop para ouvir indefinidamente.
                 key.reset();
@@ -69,7 +91,7 @@ public class DataInputReader {
 
     public void sortPost(String directory, String file) throws IOException{
         LinkedList<String> listDataInput = new LinkedList<String>();
-        FileReader f = new FileReader(directory+"\\"+file);
+        f = new FileReader(directory+"\\"+file);
         BufferedReader b = new BufferedReader(f);
         String linea = null;
         while ((linea = b.readLine()) != null){

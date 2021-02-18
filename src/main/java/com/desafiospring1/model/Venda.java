@@ -13,7 +13,7 @@ public class Venda {
 
     @Id
     public Long id;
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "venda")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "venda")
     @JsonBackReference
     private List<Item> items;
     @ManyToOne

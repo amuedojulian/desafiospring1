@@ -42,4 +42,9 @@ public class ClienteServiceImpl implements ClienteService {
     public Long countByFile(String file) {
         return clienteRepository.countByFile(file);
     }
+
+    @Override
+    public void delete(String file) {
+        this.clienteRepository.deleteAllByFile(file);
+    }
 }

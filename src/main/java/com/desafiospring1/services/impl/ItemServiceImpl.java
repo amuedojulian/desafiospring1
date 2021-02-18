@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,7 +32,8 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Long maxVenda(String file) {
-        return itemRepository.maxVenda(file);
+    public List<Long> maxVendas(String file) {
+        return itemRepository.maxVendas(file);
     }
+
 }

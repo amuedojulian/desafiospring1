@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -40,7 +41,12 @@ public class VendaServiceImpl implements VendaService {
     }
 
     @Override
-    public Long piorVendedorId(String file) {
-        return this.vendaRepository.piorVendedorId(file);
+    public List<Long> piorVendedorsId(String file) {
+        return this.vendaRepository.piorVendedorsId(file);
+    }
+
+    @Override
+    public void delete(String file) {
+        this.vendaRepository.deleteAllByFile(file);
     }
 }

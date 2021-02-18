@@ -1,6 +1,7 @@
 package com.desafiospring1.utils;
 
 import com.desafiospring1.repository.ItemRepository;
+import com.desafiospring1.repository.VendaRepository;
 import com.desafiospring1.services.ClienteService;
 import com.desafiospring1.services.ItemService;
 import com.desafiospring1.services.VendaService;
@@ -54,10 +55,24 @@ public class DataOutputWrite {
             FileWriter fw = new FileWriter(file);
             BufferedWriter bw = new BufferedWriter(fw);
 
+            String piorVendedores = "";
+            for(Long vendedor : vendaService.piorVendedorsId(f))
+            {
+                piorVendedores += vendedorService.findVendedorNameById(vendedor) + ", ";
+            }
+
+            String maxVendas = "";
+            for(Long venda : itemService.maxVendas(f))
+            {
+                maxVendas += venda + ", ";
+            }
+
             String clientes = " » O número de clientes inserido no arquivo de entrada é: " + clienteService.countByFile(f) + " «";
             String vendedores = " » O número de vendedores inserido no arquivo de entrada é: " + vendedorService.countByFile(f) + " «";
-            String venda = " » A venda mais cara foi a venda de ID: " + itemService.maxVenda(f) + " «";
-            String vendedor = " » O vendedor com menos vendas foi: " + vendedorService.findVendedorNameById(vendaService.piorVendedorId(f)) +  " «";
+            String venda = " » A venda mais cara foi a venda de ID: " + maxVendas;
+            venda = venda.substring(0, venda.length()-2) + " «";
+            String vendedor = " » O vendedor com menos vendas foi: "  + piorVendedores;
+            vendedor = vendedor.substring(0, vendedor.length()-2) + " «";
 
             bw.newLine();
             bw.write(clientes);

@@ -18,15 +18,12 @@ import java.util.List;
 public interface VendaRepository extends JpaRepository<Venda, Long> {
     List<Venda> findByVendedorId(@Param("vendedorId") Long vendedorId);
     Page<Venda> findByVendedorId(@Param("vendedorId") Long vendedorId, Pageable pageable);
-    @Query(value = "SELECT vendedor_id, COUNT( * )\n" +
-            "FROM venda\n" +
-            "WHERE file like :file \n" +
-            "GROUP BY vendedor_id\n" +
-            "HAVING COUNT( * ) = ( \n" +
-            "SELECT COUNT( * ) maximo\n" +
-            "FROM venda\n" +
-            "GROUP BY vendedor_id\n" +
-            "ORDER BY maximo ASC\n" +
-            "LIMIT 1 ) limit 1;", nativeQuery = true)
-    Long piorVendedorId(@Param("file") String file);
+    @Query(value = "SELECT vendedorId FROM\n" +
+            "(SELECT vendedorId, count(vendaId) AS ventas FROM \n" +
+            "(select vendedor.id as vendedorId, venda.id as vendaId, vendedor.file as vFile from vendedor left join venda on vendedor.id = venda.vendedor_id) \n" +
+            "where vFile like :file group by vendedorId order by count(vendaId) ASC)\n" +
+            "WHERE ventas = (SELECT MIN(venta) FROM (SELECT COUNT(vendaId) as venta, vendedor_id FROM (select vendedor_id, venda.id as vendaId, vendedor.file as vFile from vendedor left join venda on vendedor.id = venda.vendedor_id) where vFile like :file group by vendedor_id order by count(vendaId)));", nativeQuery = true)
+    List<Long> piorVendedorsId(@Param("file") String file);
+
+    void deleteAllByFile(String file);
 }

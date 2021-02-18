@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface VendaService {
@@ -39,6 +40,13 @@ public interface VendaService {
      * @param file
      * @return Long
      */
-    Long piorVendedorId(String file);
+    List<Long> piorVendedorsId(String file);
+
+    /**
+     * Troca as vendas do file x
+     *
+     * @param file
+     */
+    void delete(String file);
 
 }

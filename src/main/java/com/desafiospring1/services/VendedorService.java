@@ -56,4 +56,11 @@ public interface VendedorService {
      */
     String findVendedorNameById(@Param("id") Long id);
 
+    /**
+     * Troca os vendedores do file x
+     *
+     * @param file
+     */
+    void delete(String file);
+
 }

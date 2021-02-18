@@ -29,4 +29,11 @@ public interface ClienteService {
      * @return Long
      */
     Long countByFile(String file);
+
+    /**
+     * Troca os vendedores do file x
+     *
+     * @param file
+     */
+    void delete(String file);
 }
