@@ -18,8 +18,6 @@ public class HttpClient {
 
         httpPost = new HttpPost(url);
 
-        file = file.substring(1);
-
         switch (tipoDado) {
             case "vendedores":
                 String cpf = cadena.substring(cadena.indexOf("ç")+1, cadena.indexOf("ç", 4));

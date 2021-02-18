@@ -6,17 +6,21 @@ import com.desafiospring1.services.ClienteService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-@Service
+@Transactional
+@Service("clienteService")
 public class ClienteServiceImpl implements ClienteService {
 
     private static final Logger log = LoggerFactory.getLogger(ClienteServiceImpl.class);
 
+    @Qualifier("clienteRepository")
     @Autowired
     private ClienteRepository clienteRepository;
 
@@ -32,5 +36,10 @@ public class ClienteServiceImpl implements ClienteService {
     public Cliente persistir(Cliente cliente) {
         log.info("Persistiendo cliente: {}", cliente);
         return this.clienteRepository.save(cliente);
+    }
+
+    @Override
+    public Long countByFile(String file) {
+        return clienteRepository.countByFile(file);
     }
 }

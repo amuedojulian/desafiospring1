@@ -1,8 +1,0 @@
-
- » O número de clientes inserido no arquivo de entrada é:  «
-
-
-
- » A venda mais cara foi a venda de ID:  «
-
- » O vendedor com menos vendas foi:  «

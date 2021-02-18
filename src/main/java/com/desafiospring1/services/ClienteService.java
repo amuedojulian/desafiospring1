@@ -21,4 +21,12 @@ public interface ClienteService {
      * @return Cliente
      */
     Cliente persistir(Cliente cliente);
+
+    /**
+     * Faz um count no clientes
+     *
+     * @param file
+     * @return Long
+     */
+    Long countByFile(String file);
 }

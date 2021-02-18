@@ -50,4 +50,9 @@ public class VendedorServiceImpl implements VendedorService {
     public Long countByFile(String file) {
         return vendedorRepository.countByFile(file);
     }
+
+    @Override
+    public String findVendedorNameById(Long id) {
+        return vendedorRepository.findVendedorNameById(id);
+    }
 }

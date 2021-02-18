@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.io.*;
 import java.nio.file.*;
 import java.util.Collections;
@@ -56,6 +55,7 @@ public class DataInputReader {
                     System.out.println("Event : " + eventKind + " in File " +  file);
 
                     sortPost(directory, file);
+                    System.out.println(file);
                     dataWriter.createReport("data\\out\\"+file, file);
                 }
                 // Ouvimos novamente. Mantemos em loop para ouvir indefinidamente.
@@ -103,7 +103,7 @@ public class DataInputReader {
                 if (id.equals("vendas")) {
                     venda_id = "/" + cadena.substring(4, cadena.indexOf("ç", 4));
                     vendedorName = "/" + cadena.substring(cadena.lastIndexOf("ç")+1);
-                    optionalFile = "/" + file.substring(1);
+                    optionalFile = "/" + file;
                 }
                 client.post("http://localhost:8080/api/" + id + "/add" + venda_id + vendedorName + optionalFile, cadena, id, cadena.substring(4, cadena.indexOf("ç", 4)), file);
                 venda_id = "";

@@ -38,4 +38,9 @@ public class VendaServiceImpl implements VendaService {
         log.info("Persisitndo o venda {}", venda);
         return this.vendaRepository.save(venda);
     }
+
+    @Override
+    public Long piorVendedorId(String file) {
+        return this.vendaRepository.piorVendedorId(file);
+    }
 }

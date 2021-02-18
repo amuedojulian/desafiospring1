@@ -4,6 +4,7 @@ import com.desafiospring1.model.Venda;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.NamedQueries;
@@ -17,4 +18,15 @@ import java.util.List;
 public interface VendaRepository extends JpaRepository<Venda, Long> {
     List<Venda> findByVendedorId(@Param("vendedorId") Long vendedorId);
     Page<Venda> findByVendedorId(@Param("vendedorId") Long vendedorId, Pageable pageable);
+    @Query(value = "SELECT vendedor_id, COUNT( * )\n" +
+            "FROM venda\n" +
+            "WHERE file like :file \n" +
+            "GROUP BY vendedor_id\n" +
+            "HAVING COUNT( * ) = ( \n" +
+            "SELECT COUNT( * ) maximo\n" +
+            "FROM venda\n" +
+            "GROUP BY vendedor_id\n" +
+            "ORDER BY maximo ASC\n" +
+            "LIMIT 1 ) limit 1;", nativeQuery = true)
+    Long piorVendedorId(@Param("file") String file);
 }

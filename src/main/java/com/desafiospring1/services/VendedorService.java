@@ -1,6 +1,7 @@
 package com.desafiospring1.services;
 
 import com.desafiospring1.model.Vendedor;
+import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
@@ -40,11 +41,19 @@ public interface VendedorService {
     Vendedor persistir(Vendedor vendedor);
 
     /**
-     * Cadastra um novo vendedor na base de dados
+     * Faz um count no clientes
      *
      * @param file
      * @return Long
      */
     Long countByFile(String file);
+
+    /**
+     * Procura o nome do cliente por id
+     *
+     * @param id
+     * @return String
+     */
+    String findVendedorNameById(@Param("id") Long id);
 
 }

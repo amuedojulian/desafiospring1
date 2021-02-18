@@ -11,4 +11,6 @@ public interface VendedorRepository extends JpaRepository<Vendedor, Long> {
     Vendedor findByCpf(String cpf);
     Vendedor findByNameAndFile(String name, String file);
     Long countByFile(String file);
+    @Query(value = "select name from vendedor where id = :id", nativeQuery = true)
+    String findVendedorNameById(@Param("id") Long id);
 }

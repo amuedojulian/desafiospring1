@@ -1,11 +1,13 @@
 package com.desafiospring1.utils;
 
+import com.desafiospring1.repository.ItemRepository;
+import com.desafiospring1.services.ClienteService;
+import com.desafiospring1.services.ItemService;
+import com.desafiospring1.services.VendaService;
 import com.desafiospring1.services.VendedorService;
-import com.desafiospring1.services.impl.VendedorServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedWriter;
@@ -26,6 +28,15 @@ public class DataOutputWrite {
     @Autowired
     private VendedorService vendedorService;
 
+    @Autowired
+    private ClienteService clienteService;
+
+    @Autowired
+    private ItemService itemService;
+
+    @Autowired
+    private VendaService vendaService;
+
     public void createReport(String ruta, String f) {
         try {
             Calendar calendario = new GregorianCalendar();
@@ -43,20 +54,20 @@ public class DataOutputWrite {
             FileWriter fw = new FileWriter(file);
             BufferedWriter bw = new BufferedWriter(fw);
 
-            String clientes = " » O número de clientes inserido no arquivo de entrada é: " + " «";
-            String vendedores = " » O número de vendedores inserido no arquivo de entrada é: " + vendedorService.countByFile("0001.txt") + " «";
-            String venda = " » A venda mais cara foi a venda de ID: " + " «";
-            String vendedor = " » O vendedor com menos vendas foi: " + " «";
+            String clientes = " » O número de clientes inserido no arquivo de entrada é: " + clienteService.countByFile(f) + " «";
+            String vendedores = " » O número de vendedores inserido no arquivo de entrada é: " + vendedorService.countByFile(f) + " «";
+            String venda = " » A venda mais cara foi a venda de ID: " + itemService.maxVenda(f) + " «";
+            String vendedor = " » O vendedor com menos vendas foi: " + vendedorService.findVendedorNameById(vendaService.piorVendedorId(f)) +  " «";
 
-            bw.append("\r\n");
+            bw.newLine();
             bw.write(clientes);
-            bw.append("\r\n");
+            bw.newLine();
             bw.newLine();
             bw.write(vendedores);
-            bw.append("\r\n");
+            bw.newLine();
             bw.newLine();
             bw.write(venda);
-            bw.append("\r\n");
+            bw.newLine();
             bw.newLine();
             bw.write(vendedor);
 

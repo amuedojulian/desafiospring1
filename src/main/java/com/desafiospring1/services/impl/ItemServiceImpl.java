@@ -29,4 +29,9 @@ public class ItemServiceImpl implements ItemService {
         log.info("Persistiendo item: {}", item);
         return this.itemRepository.save(item);
     }
+
+    @Override
+    public Long maxVenda(String file) {
+        return itemRepository.maxVenda(file);
+    }
 }
