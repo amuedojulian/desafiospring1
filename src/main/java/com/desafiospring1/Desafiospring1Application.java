@@ -35,7 +35,7 @@ public class Desafiospring1Application {
                     if (Files.isRegularFile(ruta)) {
                         try {
                             String file = ruta.toString().substring(ruta.toString().lastIndexOf("\\"));
-                            dataInputReader.sortPost("data\\in", file.substring(1));
+                            dataInputReader.readFile("data\\in", file.substring(1));
                             if (!new File("data\\out").exists()) {
                                 new File("data\\out").mkdirs();
                             }

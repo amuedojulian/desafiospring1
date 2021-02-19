@@ -1,7 +1,6 @@
 package com.desafiospring1.utils;
 
 import com.desafiospring1.services.ClienteService;
-import com.desafiospring1.services.ItemService;
 import com.desafiospring1.services.VendaService;
 import com.desafiospring1.services.VendedorService;
 import org.slf4j.Logger;
@@ -9,10 +8,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
-import java.util.Collections;
 import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.stream.Collectors;
 
 
 import static java.nio.file.StandardWatchEventKinds.*;
@@ -24,7 +23,6 @@ public class DataInputReader {
     public Path directoryToWatch;
     HttpClient client = new HttpClient();
     String file;
-    FileReader f;
 
     @Autowired
     DataOutputWrite dataWriter;
@@ -69,7 +67,7 @@ public class DataInputReader {
                     switch (eventKind) {
                         case "ENTRY_CREATE":
                             System.out.println("Event : " + eventKind + " in File " +  file);
-                            sortPost(directory, file);
+                            readFile(directory, file);
                             dataWriter.createReport("data\\out\\"+file, file);
                         break;
                         case "ENTRY_DELETE":
@@ -89,20 +87,11 @@ public class DataInputReader {
         }
     }
 
-    public void sortPost(String directory, String file) throws IOException{
-        LinkedList<String> listDataInput = new LinkedList<String>();
+    public void readFile(String directory, String file) throws IOException{
 
-        f = new FileReader(directory+"\\"+file);
-        BufferedReader b = new BufferedReader(f);
-        String linea = null;
-        while ((linea = b.readLine()) != null){
-            listDataInput.add(linea);
-        }
-        Collections.sort(listDataInput);
-        b.close();
-        f.close();
+        Path path = Paths.get(directory+"\\"+file);
 
-        Iterator iter = listDataInput.iterator();
+        Iterator iter = Files.lines(path, StandardCharsets.UTF_8).filter(l -> !l.isEmpty()).collect(Collectors.toList()).iterator();
         String cadena;
         while (iter.hasNext())
         {
