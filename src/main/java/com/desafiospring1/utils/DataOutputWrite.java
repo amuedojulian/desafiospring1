@@ -1,7 +1,5 @@
 package com.desafiospring1.utils;
 
-import com.desafiospring1.repository.ItemRepository;
-import com.desafiospring1.repository.VendaRepository;
 import com.desafiospring1.services.ClienteService;
 import com.desafiospring1.services.ItemService;
 import com.desafiospring1.services.VendaService;
@@ -9,8 +7,8 @@ import com.desafiospring1.services.VendedorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -22,6 +20,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 @Service
+@Component
 public class DataOutputWrite {
 
     private static final Logger log = LoggerFactory.getLogger(DataOutputWrite.class);

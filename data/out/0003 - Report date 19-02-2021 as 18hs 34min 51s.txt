@@ -1,8 +1,0 @@
-
- » O número de clientes inserido no arquivo de entrada é: 2 «
-
- » O número de vendedores inserido no arquivo de entrada é: 4 «
-
- » A venda mais cara foi a venda de ID: 55, 56 «
-
- » O vendedor com menos vendas foi: Vicente, Juliano «
