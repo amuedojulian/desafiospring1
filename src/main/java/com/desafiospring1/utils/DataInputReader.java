@@ -57,6 +57,7 @@ public class DataInputReader implements Runnable {
     public void listen(String directory) throws InterruptedException, IOException {
         WatchKey key;
         while ((key = watchService.take()) != null) {
+            Thread.sleep(1000);
             for (WatchEvent<?> event : key.pollEvents()) {
                 String eventKind = event.kind().toString();
                 Object context = event.context();
